@@ -1,37 +1,58 @@
 import { useEffect, useState } from "react";
-import Seo from "../components/Head";
+import Seo from "../components/Seo";
 
 const API_KEY = "63f57c7278065e255b2fcfd0ab4eeb68";
 
 export default function Home() {
-  const [movies, setMovies] = useState([]);
-  // useEffect(() =>{
-  //     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`)
-  // }, [])
+	const [movies, setMovies] = useState([]);
+	// useEffect(() =>{
+	//     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`)
+	// }, [])
 
-  useEffect(() => {
-    (async () => {
-      const { results } = await (
-        await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
-        )
-      ).json();
-      //  const json = await response.json();
-      setMovies(results);
-    })();
-  }, []);
+	useEffect(() => {
+      (async () => {
+			const { results } = await (
+				await fetch(
+					`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+				)
+			).json();
+			//  const json = await response.json();
+			setMovies(results);
+		})();
+	}, []);
 
-  return (
-    <div className="container">
-      <Seo title="HOME" />
-      <div>
-        {!movies && <h4>Loading...</h4>}
-        {movies?.map(movie => (
-          <div key={movie.id}>
-            <h4>{movie.title}</h4>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+	return (
+		<div className="container">
+			<Seo title="HOME" />
+				{!movies && <h4>Loading...</h4>}
+				{movies?.map(movie => (
+					<div className="movie" key={movie.id}>
+					<img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+						<h4>{movie.original_title}</h4>
+					</div>
+				))}
+			<style jsx>{`
+				.container {
+							display: grid;
+							grid-template-columns: 1fr 1fr;
+							padding: 20px;
+							gap: 20px;
+				}
+				.movie img {
+					max-width: 100%;
+					border-radius: 12px;
+					transition: transform 0.2s ease-in-out;
+					box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+				}
+				.movie:hover img {
+					transform: scale(1.05) translateY(-10px);
+				}
+				.movie h4 {
+					font-size: 18px;
+					text-align: center;
+				}
+			`}
+			</style>
+		</div>
+	);
 }
