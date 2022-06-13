@@ -1,7 +1,6 @@
 import Seo from "../components/Head";
-import NavBar from "../components/NavBar";
 
-export default function Home(){
+export default function About(){
     return (
         <>
             <Seo title="About"/>
@@ -11,4 +10,4 @@ export default function Home(){
         </>
 
     );
-}
+}    
