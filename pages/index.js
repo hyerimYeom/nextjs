@@ -1,22 +1,13 @@
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 
-const API_KEY = "63f57c7278065e255b2fcfd0ab4eeb68";
-
 export default function Home() {
 	const [movies, setMovies] = useState([]);
-	// useEffect(() =>{
-	//     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`)
-	// }, [])
 
 	useEffect(() => {
-      (async () => {
-			const { results } = await (
-				await fetch(
-					`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
-				)
-			).json();
-			//  const json = await response.json();
+		(async () => {
+			const { results } = await ( await fetch('/api/movies'
+				)).json();
 			setMovies(results);
 		})();
 	}, []);
@@ -27,16 +18,16 @@ export default function Home() {
 				{!movies && <h4>Loading...</h4>}
 				{movies?.map(movie => (
 					<div className="movie" key={movie.id}>
-					<img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+						<img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
 						<h4>{movie.original_title}</h4>
 					</div>
 				))}
 			<style jsx>{`
 				.container {
-							display: grid;
-							grid-template-columns: 1fr 1fr;
-							padding: 20px;
-							gap: 20px;
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					padding: 20px;
+					gap: 20px;
 				}
 				.movie img {
 					max-width: 100%;
