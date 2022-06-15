@@ -5,7 +5,7 @@ export default function Home({results}) {
 	return (
 		<div className="container">
 			<Seo title="HOME" />
-				{movies?.map(movie => (
+				{results?.map(movie => (
 					<div className="movie" key={movie.id}>
 						<img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
 						<h4>{movie.original_title}</h4>
@@ -13,12 +13,18 @@ export default function Home({results}) {
 				))}
 			<style jsx>{`
 				.container {
+					max-width : 600px;
 					display: grid;
 					grid-template-columns: 1fr 1fr;
-					padding: 20px;
+					padding : 30px;
+					margin : 0 auto;
 					gap: 20px;
 				}
-				.movie img {
+				.movie{
+					justify-self : center;
+				}
+
+				.movie img {	
 					max-width: 100%;
 					border-radius: 12px;
 					transition: transform 0.2s ease-in-out;
@@ -46,9 +52,10 @@ export default function Home({results}) {
   
 export async function getServerSideProps(){
 	const { results } = await ( await fetch('http://localhost:3000/api/movies')).json();
+	
 	return {
 		props : {
 			results,
 		}
-	}
+	};
 }
