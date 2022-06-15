@@ -21,9 +21,9 @@ export default function Home({results}) {
 					gap: 20px;
 				}
 				.movie{
+					curser : pointer;
 					justify-self : center;
 				}
-
 				.movie img {	
 					max-width: 100%;
 					border-radius: 12px;
